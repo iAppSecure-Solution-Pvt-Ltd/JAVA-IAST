@@ -64,4 +64,4 @@ jobs:
           $cmdtext = "Clean" + ":" + $FusionLiteProject
           echo "Cmd : $cmdtext"
           ssh -i $FusionLiteServerKeyFile -p $FusionLiteServerPort $FusionLiteServerHost $cmdtext
-          echo ""
+          echo "Clean Done"
