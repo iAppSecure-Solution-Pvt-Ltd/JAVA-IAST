@@ -1,0 +1,60 @@
+name: Instrument
+
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        description: 'The working directory for the workflow'
+        required: true
+        type: string
+      FusionLiteProject:
+        description: 'The project name for FusionLite'
+        required: true
+        type: string
+      ApplicationFile:
+        description: 'The application file to be used'
+        required: true
+        type: string
+      InstrumentedFile:
+        description: 'The instrumented file to be used'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ${{ inputs.working_directory }}
+    env:
+      FusionLiteServerHost: ${{ vars.FUSIONLITE_SERVER_HOST }}
+      FusionLiteServerPort: ${{ vars.FUSIONLITE_SERVER_PORT }}
+      FusionLiteServerUser: ${{ secrets.FUSIONLITE_SERVER_USER }}
+      FusionLiteServerKeyFile: ${{ secrets.FUSIONLITE_SERVER_KEY_FILE }}
+      FusionLiteProject: ${{ inputs.FusionLiteProject }}
+      ApplicationFile: ${{ inputs.ApplicationFile }}
+      ApplicationInclude: ""
+      ApplicationExclude: ""
+      InstrumentedFolder: Output
+      InstrumentedFile: ${{ inputs.InstrumentedFile }}
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v3
+
+    - name: Print environment variables
+      run: |
+        echo "FusionLiteServerHost: ${{ env.FusionLiteServerHost }}"
+        echo "FusionLiteServerPort: ${{ env.FusionLiteServerPort }}"
+        echo "FusionLiteServerUser: ${{ env.FusionLiteServerUser }}"
+        echo "FusionLiteServerKeyFile: ${{ env.FusionLiteServerKeyFile }}"
+        echo "FusionLiteProject: ${{ env.FusionLiteProject }}"
+        echo "ApplicationFile: ${{ env.ApplicationFile }}"
+        echo "ApplicationInclude: ${{ env.ApplicationInclude }}"
+        echo "ApplicationExclude: ${{ env.ApplicationExclude }}"
+        echo "InstrumentedFolder: ${{ env.InstrumentedFolder }}"
+        echo "InstrumentedFile: ${{ env.InstrumentedFile }}"
+      
+    - name: Print current working directory
+      run: pwd
