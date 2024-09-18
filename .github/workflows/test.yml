@@ -12,9 +12,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     
-    defaults:
-      run:
-        working-directory: ${{ github.workspace }}/Remote
     env:
       FusionLiteServerHost: ${{ vars.FUSIONLITE_SERVER_HOST }}
       FusionLiteServerPort: ${{ vars.FUSIONLITE_SERVER_PORT }}
