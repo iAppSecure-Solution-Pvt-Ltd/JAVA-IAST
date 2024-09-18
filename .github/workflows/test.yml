@@ -1,0 +1,47 @@
+name: Test Fusion Variables
+
+on:
+  workflow_dispatch:
+    inputs:
+      application_file:
+        description: 'Test Fusion Variables'
+        required: true
+        default: 'AltoroJ.war'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}/Remote
+    env:
+      FusionLiteServerHost: ${{ vars.FUSIONLITE_SERVER_HOST }}
+      FusionLiteServerPort: ${{ vars.FUSIONLITE_SERVER_PORT }}
+      FusionLiteServerUser: ${{ secrets.FUSIONLITE_SERVER_USER }}
+      FusionLiteServerKeyFile : ${{ secrets.FUSIONLITE_SERVER_KEY_FILE }}
+      FusionLiteProject: ${{ github.event.repository.name }}
+      ApplicationFile: ${{ github.event.inputs.application_file }}
+      ApplicationInclude: ""
+      ApplicationExclude: ""
+      InstrumentedFolder: Output
+      InstrumentedFile: ${{ github.event.inputs.application_file }}
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v3
+
+    - name: Print environment variables
+      run: |
+        echo "FusionLiteServerHost: ${{ env.FusionLiteServerHost }}"
+        echo "FusionLiteServerPort: ${{ env.FusionLiteServerPort }}"
+        echo "FusionLiteServerUser: ${{ env.FusionLiteServerUser }}"
+        echo "FusionLiteServerKeyFile: ${{ env.FusionLiteServerKeyFile }}"
+        echo "FusionLiteProject: ${{ env.FusionLiteProject }}"
+        echo "ApplicationFile: ${{ env.ApplicationFile }}"
+        echo "ApplicationInclude: ${{ env.ApplicationInclude }}"
+        echo "ApplicationExclude: ${{ env.ApplicationExclude }}"
+        echo "InstrumentedFolder: ${{ env.InstrumentedFolder }}"
+        echo "InstrumentedFile: ${{ env.InstrumentedFile }}"
+    - name: Print current working directory
+      run: pwd
