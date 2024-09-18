@@ -30,8 +30,8 @@ jobs:
     env:
       FusionLiteServerHost: ${{ vars.FUSIONLITE_SERVER_HOST }}
       FusionLiteServerPort: ${{ vars.FUSIONLITE_SERVER_PORT }}
-      FusionLiteServerUser: ${{ secrets.FUSIONLITE_SERVER_USER }}
-      FusionLiteServerKeyFile: ${{ secrets.FUSIONLITE_SERVER_KEY_FILE }}
+      FusionLiteServerUser: ${{ vars.FUSIONLITE_SERVER_USER }}
+      FusionLiteServerKeyFile: ${{ vars.FUSIONLITE_SERVER_KEY_FILE }}
       FusionLiteProject: ${{ inputs.FusionLiteProject }}
       ApplicationFile: ${{ inputs.ApplicationFile }}
       ApplicationInclude: ""
