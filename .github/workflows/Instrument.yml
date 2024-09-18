@@ -22,7 +22,7 @@ on:
 
 jobs:
   instrument:
-    runs-on: iAppSecure-Priyakant
+    runs-on: self-hosted
 
     defaults:
       run:
