@@ -65,3 +65,34 @@ jobs:
           echo "Cmd : $cmdtext"
           ssh -i $env:FusionLiteServerKeyFile -p $env:FusionLiteServerPort $env:FusionLiteServerUser@$env:FusionLiteServerHost $cmdtext
           echo "Clean Project Done"
+
+    - name: Transmitting Project Files
+      run: |
+          echo "cd $env:FusionLiteProject/Input`nput $env:ApplicationFile`nexit" | Out-File -FilePath "sftp_put.txt" -Encoding ASCII
+
+          sftp -b sftp_put.txt -i $env:FusionLiteServerKeyFile -P $env:FusionLiteServerPort $env:FusionLiteServerUser@$env:FusionLiteServerHost
+          
+    - name: Preprocessing Project
+      run: |
+          $cmdtext = "PreProcess" + ":" + $env:FusionLiteProject
+          echo "Cmd : $cmdtext"
+          ssh -i $env:FusionLiteServerKeyFile -p $env:FusionLiteServerPort $env:FusionLiteServerUser@$env:FusionLiteServerHost $cmdtext
+
+    - name: Instrument Project
+      run: |
+          $cmdtext = "Instrument" + ":" + $env:FusionLiteProject
+          echo "Cmd : $cmdtext"
+          ssh -i $env:FusionLiteServerKeyFile -p $env:FusionLiteServerPort $env:FusionLiteServerUser@$env:FusionLiteServerHost $cmdtext
+
+    - name: PostProcess Project
+      run: |
+          $cmdtext = "PostProcess" + ":" + $env:FusionLiteProject
+          echo "Cmd : $cmdtext"
+          ssh -i $env:FusionLiteServerKeyFile -p $env:FusionLiteServerPort $env:FusionLiteServerUser@$env:FusionLiteServerHost $cmdtext
+
+    - name: Transmitting Project Files
+      run: |
+          mkdir $env:InstrumentedFolder
+          echo "lcd $env:InstrumentedFolder`ncd $env:FusionLiteProject/Output`nget $env:InstrumentedFile`nexit" | Out-File -FilePath "sftp_get.txt" -Encoding ASCII
+
+          sftp -b sftp_get.txt -i $env:FusionLiteServerKeyFile -P $env:FusionLiteServerPort $env:FusionLiteServerUser@$env:FusionLiteServerHost
