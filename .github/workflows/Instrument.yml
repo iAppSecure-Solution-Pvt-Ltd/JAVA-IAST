@@ -63,5 +63,5 @@ jobs:
       run: |
           $cmdtext = "Clean" + ":" + $FusionLiteProject
           echo "Cmd : $cmdtext"
-          ssh -i $FusionLiteServerKeyFile -p $FusionLiteServerPort $FusionLiteServerHost $cmdtext
+          ssh -i ${{ env.FusionLiteServerKeyFile }} -p ${{ env.FusionLiteServerPort }} ${{ env.FusionLiteServerHost }} $cmdtext
           echo "Clean Done"
