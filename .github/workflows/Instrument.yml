@@ -58,3 +58,10 @@ jobs:
       
     - name: Print current working directory
       run: pwd
+      
+    - name: Clean Project
+      run: |
+          $cmdtext = "Clean" + ":" + $FusionLiteProject
+          echo "Cmd : $cmdtext"
+          ssh -i $FusionLiteServerKeyFile -p $FusionLiteServerPort $FusionLiteServerHost $cmdtext
+          echo ""
