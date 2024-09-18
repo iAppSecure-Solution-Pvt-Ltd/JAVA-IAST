@@ -38,6 +38,7 @@ jobs:
       ApplicationExclude: ""
       InstrumentedFolder: Output
       InstrumentedFile: ${{ inputs.InstrumentedFile }}
+      FusionLiteProjectsRoot: ${{ vars.FUSIONLITE_PROJECTS_ROOT }}/${{ inputs.FusionLiteProject }}
 
     steps:
     - name: Check out the repository
@@ -58,6 +59,10 @@ jobs:
       
     - name: Print current working directory
       run: pwd
+
+    - name: Copy Properties File to Fusion
+      run: |
+          Copy-Item -Path "${{ github.workspace }}\Local\*" -Destination "$env:FusionLiteProjectsRoot/" -Recurse -Force
       
     - name: Clean Project
       run: |
